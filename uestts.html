@@ -1,0 +1,320 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.88.1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+	<link rel="stylesheet" href="custom.css">
+	<link rel="stylesheet" href="normalize.css">
+
+	<title>UESTTS</title>
+	<link href="bootstrap.min.css" rel="stylesheet">
+
+	<style>
+    .image-container {
+        display: flex; /* 使用flex布局使内容并排 */
+        justify-content: center; /* 水平居中显示 */
+        align-items: center; /* 垂直居中显示 */
+        margin-bottom: 20px; /* 下边距 */
+    }
+    .image-container img {
+        margin-right: 20px; /* 图片之间的间隔 */
+        width: 600px; /* 图片宽度 */
+    }
+    .image-container img:last-child {
+        margin-right: 0; /* 最后一张图片不需要右边距 */
+    }
+    
+    .experiment-table {
+        min-width: 1800px;
+    }
+    .experiment-table thead th {
+        font-weight: 700;
+        border-bottom: 2px solid #222;
+        vertical-align: middle;
+        text-align: center;
+    }
+    .experiment-table tbody td:nth-child(2),
+    .experiment-table tbody td:nth-child(3) {
+        border: 1px solid #cfd4dc;
+        padding: 10px 12px;
+        line-height: 1.6;
+    }
+    .experiment-table tbody td:nth-child(2) {
+        min-width: 420px;
+        text-align: left;
+        word-break: normal;
+        overflow-wrap: normal;
+    }
+    .experiment-table tbody td:nth-child(3) {
+        min-width: 360px;
+        word-break: keep-all;
+        overflow-wrap: normal;
+    }</style>
+
+</head>
+
+
+<body data-new-gr-c-s-check-loaded="14.1091.0" data-gr-ext-installed="">
+
+<div class="container" >
+<header role="banner">
+</header>
+<main role="main">
+<article itemscope itemtype="https://schema.org/BlogPosting">
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<div class="text-center">
+	<h2>UESTTS:Unifying Emotion Understanding and Speech Generation in Zero-Shot TTS via LLM-Derived Emotion Representations</h2>
+
+      
+	</div>
+	<p><b>Abstract:</b>
+		Large language model-based zero-shot text-to-speech has advanced speaker cloning and prosody modeling, yet it often fails to consistently align emotion with textual semantics, especially when the reference speech conflicts with the target-text context, leading to emotional drift, intensity distortion, and cross-utterance inconsistency. We propose UESTTS, a zero-shot emotional TTS framework that jointly performs text-level affect understanding and autoregressive speech-token generation with a text LLM backbone. An Emotion Encoder derives an emotion distribution and a global emotion vector from the LLM hidden states; these affective cues, together with a de-emotionalized style vector, are injected into token generation, while FiLM modulation conditioned on the global emotion vector further improves emotional consistency. UESTTS also introduces hierarchical emotion conditioning, combining paragraph-/long-range trajectory modeling with fine-grained local intensity control. Experiments show that UESTTS preserves zero-shot speaker timbre reproduction while producing emotion that more reliably matches the communicative intent of the input text.
+	</p>
+	<div style="text-align: center; margin-top: 20px;">
+		<img src="uestts.png" alt="UESTTS Figure" style="max-width: 100%; height: auto;">
+		<p style="text-align: center; margin-top: 8px;">Figure 1: An overview of our proposed UESTTS</p>
+	</div>
+
+	</div>
+<!------ Application -------------------------->
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Comparative experiment samples" style="text-align: center;">Comparative experiment samples</h2>
+	<div class="table-responsive pt-3">
+		<table class="table table-hover pt-2 experiment-table">
+			<colgroup>
+				<col style="width: 6%;">
+				<col style="width: 24%;">
+				<col style="width: 24%;">
+				<col style="width: 8%;">
+				<col style="width: 7.6%;">
+				<col style="width: 7.6%;">
+				<col style="width: 7.6%;">
+				<col style="width: 7.6%;">
+				<col style="width: 7.6%;">
+			</colgroup>
+			<thead>
+			<tr>
+				<th style="vertical-align : middle;text-align: center">Emotion</th>
+				<th style="vertical-align : middle;text-align: center">text(en)</th>
+				<th style="vertical-align : middle;text-align: center">text(zh)</th>
+				<th style="vertical-align : middle;text-align: center">Reference<br>audio</th>
+				<th style="vertical-align : middle;text-align: center">UESTTS</th>
+				<th style="vertical-align : middle;text-align: center">Cosyvoice 2</th>
+				<th style="vertical-align : middle;text-align: center">Cosyvoice 3</th>
+				<th style="vertical-align : middle;text-align: center">Index TTS2</th>
+				<th style="vertical-align : middle;text-align: center">Emovoice-PP</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">angry</td>
+					<td style="vertical-align : middle;text-align:center;">"Your constant lies and excuses have pushed me past my limit, and I am done tolerating them."</td>
+					<td style="vertical-align : middle;text-align:center;">“你一再的谎言和借口已经让我忍无可忍了，我再也无法容忍这些了。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/qianxi.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/01_angry_qianxi_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice2/01_angry_qianxi_cosy2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice3/01_angry_qianxi_cosy3.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="index/01_angry_qianxi_index.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="emovoice_pp/01_angry_qianxi_emovoice_pp.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">angry</td>
+					<td style="vertical-align : middle;text-align:center;">"This betrayal cuts deep, and I am enraged by the trust you so casually destroyed."</td>
+					<td style="vertical-align : middle;text-align:center;">“这种背叛令人痛心不已，而你如此轻率地破坏了我们的信任，这让我感到无比愤怒。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/a.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/07_angry_A_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice2/07_angry_A_cosy2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice3/07_angry_A_cosy3.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="index/07_angry_A_index.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="emovoice_pp/07_angry_A_emovoice_pp.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">sad</td>
+					<td style="vertical-align : middle;text-align:center;">"My heart feels unbearably heavy, as if every breath carries the weight of endless disappointment."</td>
+					<td style="vertical-align : middle;text-align:center;">“我的内心异常沉重，仿佛每一次呼吸都承载着无尽失望的分量。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/qianxi.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/02_sad_qianxi_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice2/02_sad_qianxi_cosy2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice3/02_sad_qianxi_cosy3.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="index/02_sad_qianxi_index.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="emovoice_pp/02_sad_qianxi_emovoice_pp.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">sad</td>
+					<td style="vertical-align : middle;text-align:center;">"Every quiet night reminds me of what I have lost and cannot ever reclaim."</td>
+					<td style="vertical-align : middle;text-align:center;">“每一个宁静的夜晚都会让我想起那些我所失去而又永远无法挽回的东西。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/qianxi.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/03_sad_qianxi_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice2/03_sad_qianxi_cosy2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice3/03_sad_qianxi_cosy3.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="index/03_sad_qianxi_index.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="emovoice_pp/03_sad_qianxi_emovoice_pp.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">fearful</td>
+					<td style="vertical-align : middle;text-align:center;">"The darkness around me feels threatening and impossible to ignore."</td>
+					<td style="vertical-align : middle;text-align:center;">“身四周的黑暗笼罩让人感到既恐惧又无法忽视。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/qianxi.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/06_fearful_qianxi_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice2/06_fearful_qianxi_cosy2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice3/06_fearful_qianxi_cosy3.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="index/06_fearful_qianxi_index.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="emovoice_pp/06_fearful_qianxi_emovoice_pp.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">happy</td>
+					<td style="vertical-align : middle;text-align:center;">"A gentle breeze carries the scent of flowers, making everything feel fresh and wonderfully alive."</td>
+					<td style="vertical-align : middle;text-align:center;">“一阵微风携带着花香，让一切显得清新而充满生机。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/c.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/11_happy_C_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice2/11_happy_C_cosy2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice3/11_happy_C_cosy3.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="index/11_happy_C_index.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="emovoice_pp/11_happy_C_emovoice_pp.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">neutral</td>
+					<td style="vertical-align : middle;text-align:center;">"The team gathered in the conference room to review the quarterly data and outline the objectives for the upcoming project phase."</td>
+					<td style="vertical-align : middle;text-align:center;">“团队成员们聚集在会议室里，对季度数据进行了审查，并明确了接下来项目阶段的目标。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/lady.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/12_neutral_lady_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice2/12_neutral_lady_cosy2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice3/12_neutral_lady_cosy3.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="index/12_neutral_lady_index.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="emovoice_pp/12_neutral_lady_emovoice_pp.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">suprised</td>
+					<td style="vertical-align : middle;text-align:center;">"I am completely stunned by what just happened, and I can hardly believe my own eyes."</td>
+					<td style="vertical-align : middle;text-align:center;">“刚刚发生的事让我完全惊呆了，我简直不敢相信自己的眼睛。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/girl.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/14_suprised_girl_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice2/14_suprised_girl_cosy2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="cosyvoice3/14_suprised_girl_cosy3.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="index/14_suprised_girl_index.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="emovoice_pp/14_suprised_girl_emovoice_pp.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Ablation experiment samples" style="text-align: center;">Ablation experiment samples</h2>
+	<div class="table-responsive pt-3">
+		<table class="table table-hover pt-2 experiment-table">
+			<colgroup>
+				<col style="width: 8%;">
+				<col style="width: 30%;">
+				<col style="width: 30%;">
+				<col style="width: 10%;">
+				<col style="width: 7.33%;">
+				<col style="width: 7.33%;">
+				<col style="width: 7.34%;">
+			</colgroup>
+			<thead>
+			<tr>
+				<th style="vertical-align : middle;text-align: center">Emotion</th>
+				<th style="vertical-align : middle;text-align: center">text(en)</th>
+				<th style="vertical-align : middle;text-align: center">text(zh)</th>
+				<th style="vertical-align : middle;text-align: center">Reference<br>audio</th>
+				<th style="vertical-align : middle;text-align: center">UESTTS</th>
+				<th style="vertical-align : middle;text-align: center">w/o Film<br> modulation</th>
+				<th style="vertical-align : middle;text-align: center">w/o Emotion<br>Embedding</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">angry</td>
+					<td style="vertical-align : middle;text-align:center;">"Your constant lies and excuses have pushed me past my limit, and I am done tolerating them."</td>
+					<td style="vertical-align : middle;text-align:center;">“你一再的谎言和借口已经让我忍无可忍了，我再也无法容忍这些了。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/qianxi.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/01_angry_qianxi_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_film/01_angry_qianxi_ues_film.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_emo/01_angry_qianxi_ues_emo.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">angry</td>
+					<td style="vertical-align : middle;text-align:center;">"This betrayal cuts deep, and I am enraged by the trust you so casually destroyed."</td>
+					<td style="vertical-align : middle;text-align:center;">“这种背叛令人痛心不已，而你如此轻率地破坏了我们的信任，这让我感到无比愤怒。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/a.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/07_angry_A_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_film/07_angry_A_ues_film.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_emo/07_angry_A_ues_emo.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">sad</td>
+					<td style="vertical-align : middle;text-align:center;">"My heart feels unbearably heavy, as if every breath carries the weight of endless disappointment."</td>
+					<td style="vertical-align : middle;text-align:center;">“我的内心异常沉重，仿佛每一次呼吸都承载着无尽失望的分量。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/qianxi.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/02_sad_qianxi_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_film/02_sad_qianxi_ues_film.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_emo/02_sad_qianxi_ues_emo.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">sad</td>
+					<td style="vertical-align : middle;text-align:center;">"Every quiet night reminds me of what I have lost and cannot ever reclaim."</td>
+					<td style="vertical-align : middle;text-align:center;">“每一个宁静的夜晚都会让我想起那些我所失去而又永远无法挽回的东西。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/qianxi.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/03_sad_qianxi_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_film/03_sad_qianxi_ues_film.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_emo/03_sad_qianxi_ues_emo.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">fearful</td>
+					<td style="vertical-align : middle;text-align:center;">"The darkness around me feels threatening and impossible to ignore."</td>
+					<td style="vertical-align : middle;text-align:center;">“我周围的黑暗笼罩让人感到既恐惧又无法忽视。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/qianxi.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/06_fearful_qianxi_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_film/06_fearful_qianxi_ues_film.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_emo/06_fearful_qianxi_ues_emo.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">happy</td>
+					<td style="vertical-align : middle;text-align:center;">"A gentle breeze carries the scent of flowers, making everything feel fresh and wonderfully alive."</td>
+					<td style="vertical-align : middle;text-align:center;">“一阵微风携带着花香，让一切显得清新而充满生机。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/c.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/11_happy_C_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_film/11_happy_C_ues_film.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_emo/11_happy_C_ues_emo.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">neutral</td>
+					<td style="vertical-align : middle;text-align:center;">"The team gathered in the conference room to review the quarterly data and outline the objectives for the upcoming project phase."</td>
+					<td style="vertical-align : middle;text-align:center;">“团队成员们聚集在会议室里，对季度数据进行了审查，并明确了接下来项目阶段的目标。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/lady.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/12_neutral_lady_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_film/12_neutral_lady_ues_film.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_emo/12_neutral_lady_ues_emo.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+				<tr>
+					<td style="vertical-align : middle;text-align:center;">suprised</td>
+					<td style="vertical-align : middle;text-align:center;">"I am completely stunned by what just happened, and I can hardly believe my own eyes."</td>
+					<td style="vertical-align : middle;text-align:center;">“刚刚发生的事让我完全惊呆了，我简直不敢相信自己的眼睛。”</td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="reference_audio/girl.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="UESTTS/14_suprised_girl_ues.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_film/14_suprised_girl_ues_film.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="xiaolong_emo/14_suprised_girl_ues_emo.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 style="text-align: center;">Disclaimer</h2>
+	<p>The content provided above is for academic purposes only and is intended to demonstrate technical capabilities. Some examples are sourced from the internet. If any content infringes on your rights, please contact us to request its removal.</p>
+</div>
+
+</article>
+</main>
+</div>
+
+</body>
+
+</script>
+</html>
